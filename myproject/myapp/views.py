@@ -1,0 +1,24 @@
+from django.shortcuts import render
+from django.http import HttpResponse
+from myapp.models import Application
+
+def home(request):
+    return render(request, 'hello.html')
+
+def submit(request):
+    if request.method == 'POST':
+        # Access form data from the POST request
+        positionTitle = request.POST.get('positionTitle')
+        companyName = request.POST.get('companyName')
+        jobCategory = request.POST.get('jobCategory')
+        coverLetter = request.POST.get('coverLetter')
+
+        # Insert Data into PostgreSQL
+        a = Application(positionTitle=positionTitle, companyName=companyName,
+                        jobCategory=jobCategory, coverLetter=coverLetter)
+        a.save()
+        
+        # Now you can use this data, for example, validate or store it
+        return HttpResponse(f"Received application data!")
+    else:
+        return render(request, 'hello.html')
