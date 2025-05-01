@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Job Input Box</title>
+  <title>Job Application Form</title>
 </head>
 <head>
     <style>
@@ -13,15 +13,26 @@
         border: 2px solid black; /* thicker border */
         padding: 5px; /* optional: adds spacing inside the box */
         border-radius: 4px; /* optional: rounded corners */
+        font-family: Arial, sans-serif;
       }
       select {
+        appearance: none;         /* Removes browser default styles */
+        -webkit-appearance: none; /* Safari/Chrome */
+        -moz-appearance: none;    /* Firefox */
+        background: white;        /* Flat white background */
+        border: 2px solid black;
+        padding: 5px;
+        font-size: 10px;
+        font-family: Arial, sans-serif;
         width: 314px;
       }
     </style>
   </head>
 <body>
 
-  <h2>Enter Application Details</h2>
+  <h1>JobLog</h1>
+
+  <h2>Enter Application Details:</h2>
 
   <form action="/myapp/submit/" method="post">
 
@@ -40,14 +51,21 @@
         <option value="business_and_sales">Business & Sales</option>
       </select><br><br>
 
-    <!--Button for selecting whether cover letter was included or not.-->
-    <label>Cover Letter?</label><br>
-    <input type="radio" id="yes" name="coverLetter" value="yes">
-    <label class="radio-label" for="yes">Yes</label>
-    <input type="radio" id="no" name="coverLetter" value="no">
-    <label class="radio-label" for="no">No</label>
+    <!--Drop down menu for selecting if cover letter was included.-->
+    <select id="coverLetter" name="coverLetter">
+      <option value="">-- Cover Letter --</option>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select><br><br>
 
-    <br><br>
+    <!--Drop down menu for selecting preset categories.-->
+    <select id="discoveryMethod" name="discoveryMethod">
+      <option value="">-- Discover Method --</option>
+      <option value="indeed">Indeed</option>
+      <option value="linkedin">LinkedIn</option>
+      <option value="reference">Reference</option>
+    </select><br><br>
+
     <input type="submit" value="Submit">
   </form>
 
