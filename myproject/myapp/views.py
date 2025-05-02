@@ -14,8 +14,8 @@ def submit(request):
         coverLetter = request.POST.get('coverLetter')
         discoveryMethod = request.POST.get('discoveryMethod')
 
-        if (positionTitle is "" or companyName is "" or jobCategory is ""
-            or coverLetter is "" or discoveryMethod is ""):
+        # Check if user forgot to enter a field and return error message.
+        if (positionTitle == "" or companyName == "" or jobCategory == "" or coverLetter == "" or discoveryMethod == ""):
             return render(request, 'error.html')
 
         # Insert Data into PostgreSQL
@@ -23,13 +23,19 @@ def submit(request):
                         jobCategory=jobCategory, coverLetter=coverLetter, discoveryMethod=discoveryMethod)
         a.save()
         
-        # Now you can use this data, for example, validate or store it
         return render(request, 'success.html')
+    
     else:
         return render(request, 'hello.html')
 
 def view(request): #TODO
-    return render(request, 'view.html')
+    # Retrieve tuples and format into string.
+    display_of_applications = ""
+    for a in Application.objects.all():
+        str_tuple = "[" + str(a.id) + "] " + str(a.date) + " | " + a.positionTitle + " | " + a.companyName + " | " + a.jobCategory + " | " + a.coverLetter + " | " + a.discoveryMethod + " | " + str(a.interviewCount) + " | " + str(a.jobOffer)
+        display_of_applications += str_tuple
+        display_of_applications += "\n"
+    return render(request, 'view.html', {'display_of_applications': display_of_applications})
 
 def update(request): #TODO
     return render(request, 'update.html')

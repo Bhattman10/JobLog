@@ -15,4 +15,4 @@ class Application(models.Model):
     jobOffer = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.name
+        return str(self.id)
