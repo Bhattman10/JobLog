@@ -27,3 +27,12 @@ def submit(request):
         return render(request, 'success.html')
     else:
         return render(request, 'hello.html')
+
+def view(request): #TODO
+    return render(request, 'view.html')
+
+def update(request): #TODO
+    return render(request, 'update.html')
+
+def stats(request): #TODO
+    return render(request, 'stats.html')

@@ -1,10 +1,44 @@
+<!-----Meta Data----->
 <!DOCTYPE html>
 <html>
 <head>
   <title>Application Logging Error</title>
 </head>
+
+<!-----Title & Menu----->
+<head>
+  <style>
+    .menu-bar {
+      background-color: #333;
+      overflow: hidden;
+    }
+    .menu-bar a {
+      float: left;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 20px;
+      text-decoration: none;
+    }
+    .menu-bar a:hover {
+      background-color: #575757;
+    }
+  </style>
+</head>
 <body>
   <h1>JobLog</h1>
-  Error: one or more fields was left empty!
+  <div class="menu-bar">
+    <a href="{% url 'home' %}">Create</a>
+    <a href="{% url 'view' %}">View</a>
+    <a href="{% url 'update' %}">Update</a>
+    <a href="{% url 'stats' %}">Stats</a>
+  </div>
+</body>
+
+<!-----Main Content----->
+<body>
+  <h2>
+    Error: one or more fields was left empty!
+  </h2>
 </body>
 </html>
