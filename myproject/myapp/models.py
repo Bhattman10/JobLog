@@ -11,6 +11,8 @@ class Application(models.Model):
     jobCategory = models.CharField(max_length=50)
     coverLetter = models.CharField(max_length=5)
     discoveryMethod = models.CharField(max_length=15)
+    interviewCount = models.SmallIntegerField(default=0)
+    jobOffer = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
