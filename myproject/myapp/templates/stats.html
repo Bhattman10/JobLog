@@ -1,44 +1,76 @@
 <!-----Meta Data----->
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>Job Application Form</title>
 </head>
 
-<!-----Title & Menu----->
+<!-----CSS----->
 <head>
-    <style>
-      .menu-bar {
+  <style>
+    ::placeholder {
+      font-weight: bold;
+    }
+    input[type="text"] {
+      width: 300px;
+      border: 2px solid black; /* thicker border */
+      padding: 5px; /* optional: adds spacing inside the box */
+      border-radius: 4px; /* optional: rounded corners */
+      font-family: Arial, sans-serif;
+    }
+    select {
+      appearance: none;         /* Removes browser default styles */
+      -webkit-appearance: none; /* Safari/Chrome */
+      -moz-appearance: none;    /* Firefox */
+      background: white;        /* Flat white background */
+      border: 2px solid black;
+      padding: 5px;
+      font-size: 10px;
+      font-family: Arial, sans-serif;
+      width: 314px;
+    }
+    .menu-bar {
         background-color: #333;
         overflow: hidden;
       }
-      .menu-bar a {
-        float: left;
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 14px 20px;
-        text-decoration: none;
-      }
-      .menu-bar a:hover {
-        background-color: #575757;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>JobLog</h1>
-    <div class="menu-bar">
-        <a href="{% url 'home' %}">Create</a>
-        <a href="{% url 'view' %}">View</a>
-        <a href="{% url 'update' %}">Update</a>
-        <a href="{% url 'stats' %}">Stats</a>
-    </div>
-  </body>
+    .menu-bar a {
+      float: left;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 20px;
+      text-decoration: none;
+    }
+    .menu-bar a:hover {
+      background-color: #575757;
+    }
+  </style>
+</head>
+
+<!-----Title & Menu----->
+<body>
+  <h1>JobLog</h1>
+  <div class="menu-bar">
+      <a href="{% url 'home' %}">Create</a>
+      <a href="{% url 'view' %}">View</a>
+      <a href="{% url 'update' %}">Update</a>
+      <a href="{% url 'stats' %}">Stats</a>
+  </div>
+</body>
 
   <!-----Main Content----->
 <body>
-  <h1>JobLog</h1>
-  Under construction!
+  <h2>Application Statistics</h2>
+  <form action="/myapp/stats/" method="post">
+    {% csrf_token %}
+    Job Category<br>
+    <input type="checkbox" name="software_developer" value="software_developer">software_developer<br>
+    <input type="checkbox" name="data_analytics" value="data_analytics">data_analytics<br>
+    <input type="checkbox" name="information_technology" value="information_technology">information_technology<br>
+    <input type="checkbox" name="business_and_sales" value="business_and_sales">business_and_sales<br>
+
+    <input type="submit" value="Submit">
+  </form>
+  {{stat_display}}
 </body>
 </html>
