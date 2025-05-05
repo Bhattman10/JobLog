@@ -63,14 +63,23 @@
   <h2>Application Statistics</h2>
   <form action="/myapp/stats/" method="post">
     {% csrf_token %}
+
     Job Category<br>
     <input type="checkbox" name="software_developer" value="software_developer">software_developer<br>
     <input type="checkbox" name="data_analytics" value="data_analytics">data_analytics<br>
     <input type="checkbox" name="information_technology" value="information_technology">information_technology<br>
     <input type="checkbox" name="business_and_sales" value="business_and_sales">business_and_sales<br>
+    <br>Cover Letter<br>
+    <input type="checkbox" name="cover_letter_true" value="yes">Included<br>
+    <input type="checkbox" name="cover_letter_false" value="no">Not Included<br>
+    <br>Discovery Method<br>
+    <input type="checkbox" name="indeed" value="indeed">Indeed<br>
+    <input type="checkbox" name="linkedin" value="linkedin">LinkedIn<br>
+    <input type="checkbox" name="reference" value="reference">Reference<br>
 
-    <input type="submit" value="Submit">
+    <br><input type="submit" value="Submit">
   </form>
+  <br>
   {{stat_display}}
 </body>
 </html>

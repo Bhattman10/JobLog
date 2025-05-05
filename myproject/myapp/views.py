@@ -97,28 +97,41 @@ def update(request):
 
 def stats(request): #TODO
     if request.method == 'POST':
+
+        # Collect filter data from form
         filter_software_developer = request.POST.get('software_developer')
         filter_data_analytics = request.POST.get('data_analytics')
         filter_information_technology = request.POST.get('information_technology')
         filter_business_and_sales = request.POST.get('business_and_sales')
-        filtered_applications = Application.objects.filter(Q(jobCategory=filter_software_developer)
-                                                           | Q(jobCategory=filter_data_analytics)
-                                                           | Q(jobCategory=filter_information_technology)
-                                                           | Q(jobCategory=filter_business_and_sales))
-        filtered_applications_with_interviews = Application.objects.filter((Q(jobCategory=filter_software_developer)
-                                                                           | Q(jobCategory=filter_data_analytics)
-                                                                           | Q(jobCategory=filter_information_technology)
-                                                                           | Q(jobCategory=filter_business_and_sales))
-                                                                           & ~Q(interviewCount=0))
-        stat_display = "Percentage of applications with at least one interview = %"
-        if filtered_applications.exists():
+        filter_cover_letter_true = request.POST.get('cover_letter_true')
+        filter_cover_letter_false = request.POST.get('cover_letter_false')
+        filter_indeed = request.POST.get('indeed')
+        filter_linkedin = request.POST.get('linkedin')
+        filter_reference = request.POST.get('reference')
+
+        # Make sure at least one box is selected for each category
+        if ((filter_software_developer is None and filter_data_analytics is None and filter_information_technology is None and filter_business_and_sales is None)
+            or (filter_cover_letter_true is None and filter_cover_letter_false is None)
+            or (filter_indeed is None and filter_linkedin is None and filter_reference is None)):
+            return render(request, 'error.html', {'error' : "Select at least one option for each filter cateogry."})
+
+        filtered_applications = Application.objects.filter((Q(jobCategory=filter_software_developer) | Q(jobCategory=filter_data_analytics) | Q(jobCategory=filter_information_technology) | Q(jobCategory=filter_business_and_sales))
+                                                           & (Q(coverLetter=filter_cover_letter_true) | Q(coverLetter=filter_cover_letter_false))
+                                                           & (Q(discoveryMethod=filter_indeed) | Q(discoveryMethod=filter_linkedin) | Q(discoveryMethod=filter_reference)))
+        filtered_applications_with_interviews = Application.objects.filter((Q(jobCategory=filter_software_developer) | Q(jobCategory=filter_data_analytics) | Q(jobCategory=filter_information_technology) | Q(jobCategory=filter_business_and_sales))
+                                                           & (Q(coverLetter=filter_cover_letter_true) | Q(coverLetter=filter_cover_letter_false))
+                                                           & (Q(discoveryMethod=filter_indeed) | Q(discoveryMethod=filter_linkedin) | Q(discoveryMethod=filter_reference))
+                                                           & ~Q(interviewCount=0))
+        
+        # Return percent of qualified applications that resulted in an interview
+        stat_display = "Percentage of applications w/ at least one interview = %"
+        if filtered_applications.exists(): # Permit division if the denominator is not zero 
             percent = filtered_applications_with_interviews.count() / filtered_applications.count()
             truncated_percent = round(percent, 2)
             stat_display += str(truncated_percent)
         else:
             stat_display += "0.00"
             
-
         return render(request, 'stats.html', {'stat_display': stat_display})
     else:
         return render(request, 'stats.html')
